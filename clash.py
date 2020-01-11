@@ -1,6 +1,7 @@
 import requests
 import json
 
+# Y0VGUUPLP --> my player id
 
 def get_key(file):
 	return open(file).read().strip('\n')
@@ -72,7 +73,10 @@ def get_locations():
 def get_cards():
 	info = json.loads(make_request("/cards").text)
 	return info
+
+
 # if __name__ == "__main__":
 # 	print("hi")
-print(get_player_upcomingchests("Y0VGUUPLP"))
-# print(get_locations())
+# print(get_player_info("Y0VGUUPLP"))
+
+print(get_cards())
