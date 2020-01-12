@@ -6,6 +6,7 @@ import json
 def get_key(file):
 	return open(file).read().strip('\n')
 
+# still need to handle bad requests
 def make_request(endpoint, file):
 	key = get_key(file)
 	header = {"Authorization": "Bearer %s" % key}
