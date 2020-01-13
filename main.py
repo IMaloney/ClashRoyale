@@ -61,8 +61,10 @@ def get_player_cmd(arg, api_key):
 		if arg[1][0] != "-":
 			print("Invalid argument.")
 		else:
-			if arg[1][1:] == "n":
+			if arg[1][1:].strip() == "n":
 				print(p.name)
+			elif arg[1][1:].strip() == "wl":
+				print(p.get_win_ratio())
 
 
 

@@ -15,8 +15,8 @@ class Player:
 		# clan name, clan tag excluding #
 		self.clan = (info["clan"]["name"], info["clan"]["tag"][1:])
 
-		def get_win_ratio(self):
-			return self.wins / self.losses
+	def get_win_ratio(self):
+		return (int)((self.wins / self.losses) * 100)
 
 
 # player = Player("Y0VGUUPLP")
