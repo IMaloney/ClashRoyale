@@ -78,6 +78,4 @@ def get_cards(file):
 	return info
 
 
-# if __name__ == "__main__":
-# 	print("hi")
 # print(get_player_info("Y0VGUUPLP"))

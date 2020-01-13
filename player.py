@@ -1,8 +1,8 @@
 import clash
 
 class Player:
-	def __init__(self, player_tag):
-		info = clash.get_player_info(player_tag)
+	def __init__(self, player_tag, file):
+		info = clash.get_player_info(player_tag, file)
 		self.name = info["name"]
 		self.level = info["expLevel"]
 		self.current_trophies = info["trophies"]
@@ -16,7 +16,7 @@ class Player:
 		self.clan = (info["clan"]["name"], info["clan"]["tag"][1:])
 
 		def get_win_ratio(self):
-			return self.wins/ self.losses
+			return self.wins / self.losses
 
 
 # player = Player("Y0VGUUPLP")
