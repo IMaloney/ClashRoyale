@@ -68,10 +68,10 @@ def get_locations(file):
 	return info
 
 # 57000000
-def get_locations(file):
-	endpoint = "/locations"
-	info = json.loads(make_request(endpoint, file).text)
-	return info
+# def get_locations(file):
+# 	endpoint = "/locations"
+# 	info = json.loads(make_request(endpoint, file).text)
+# 	return info
 
 def get_cards(file):
 	info = json.loads(make_request("/cards", file).text)

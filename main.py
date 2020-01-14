@@ -1,3 +1,4 @@
+from typing import List
 import clash
 from player import Player
 
@@ -52,7 +53,7 @@ def print_help(arg):
 		print('\tp\t\tprints player specific information. Enter "h p" for more information on the p command.')
 		print('\tc\t\tprints clan specific information. Enter "h c" for more information on the c command.')
 
-def get_player_cmd(arg, api_key):
+def get_player_cmd(arg: List[str], api_key: str):
 	# handle one tag as of now
 	if arg is None or len(arg) < 2: 
 		print('Missing arguments. Enter "h p" for more information on the player command')
@@ -79,7 +80,7 @@ def get_player_cmd(arg, api_key):
 # def compare_clans(args, stat):
 # 	pass
 
-def parse(full_cmd, api_key):
+def parse(full_cmd: List[str], api_key:str):
 	cmd = full_cmd[0]
 	cmd.lower()
 	# will either be one (full information), or specify what info you want
@@ -106,7 +107,7 @@ def parse(full_cmd, api_key):
 	return True
 
 
-def repl(api_key):
+def repl(api_key: str):
 	# figure out why this creates two spaces
 	print('\n')
 	# keep running list in current session for comparison
