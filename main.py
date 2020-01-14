@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 import clash
 from player import Player
 
@@ -53,7 +53,7 @@ def print_help(arg):
 		print('\tp\t\tprints player specific information. Enter "h p" for more information on the p command.')
 		print('\tc\t\tprints clan specific information. Enter "h c" for more information on the c command.')
 
-def get_player_cmd(arg: List[str], api_key: str):
+def get_player_cmd(arg: Optional[List[str]], api_key: str):
 	# handle one tag as of now
 	if arg is None or len(arg) < 2: 
 		print('Missing arguments. Enter "h p" for more information on the player command')
@@ -117,11 +117,11 @@ def repl(api_key: str):
 	while exit:
 		cmd = input("Clash Royale>> ")
 		cmd.strip()
-		cmd = cmd.split()
+		cmd_list = cmd.split()
 		if cmd is None or not len(cmd):
 			print('No command entered. Enter "h" or "help" for list of commands.')
 		else:
-			exit = parse(cmd, api_key)
+			exit = parse(cmd_list, api_key)
 
 def main():
 	# TODO: ignore signals
