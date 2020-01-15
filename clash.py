@@ -8,6 +8,7 @@ def get_key(file):
 
 # still need to handle bad requests
 def make_request(endpoint, file):
+	# will ultimately have to pass in api key no matter what
 	if not file:
 		file = "./api_key.txt"
 	key = get_key(file)
@@ -77,5 +78,22 @@ def get_cards(file):
 	info = json.loads(make_request("/cards", file).text)
 	return info
 
+
+def format_cards(cards):
+	card_dict = dict()
+	for card in cards:
+		level = card["level"]
+		if card["maxLevel"] == 5:
+			level += 8
+		elif card["maxLevel"] == 8:
+			level += 5
+		elif card["maxLevel"] == 11:
+			level += 2
+		# id may be unnecessary
+		card_dict[card["name"]] = (level, card["count"], card["id"])
+	return card_dict
+
+
+# print(get_cards("./api_key.txt"))
 
 # print(get_player_info("Y0VGUUPLP"))

@@ -17,7 +17,8 @@ def print_player_help():
 	print("\nHelp: p [player tag] [options...]")
 	print("\tPrints information about the player. The player tag is the set of characters\n\tfound the username in the player profile portal.\n")
 	print("\tOPTIONS:")
-	print("\t\t-l[s/d][number of matches]\t\treturn the number of battles")
+	# if no number given, prnts all of that type (type must be supplied)
+	print("\t\t-l[s/d][#]\t\treturn the number of battles")
 	print("\t\t\t\t\t\t\tincluding details.")
 	print("\t\t-c\t\tReturn the type of chest indexed at when the player will\t\t\t\trecieve the chest.")
 	print("\t\t-n\t\tReturn the name of the player.")
@@ -42,7 +43,10 @@ def print_clan_help():
 	print("\t\t-l\t\tReturn the leader.")
 	print("\n\tALIAS:\n\t\tclan\n\n\tARGUMENT:\n\t\tclan tag\t\tfound under the clan profile.\n")
 
-def print_help(arg: Optional[List[str]]):
+def print_compare_help():
+	pass
+
+def print_help(arg: str):
 	if arg:
 		if arg == "p" or arg == "player":
 			print_player_help()
@@ -62,11 +66,35 @@ def get_player_cmd(arg: Optional[List[str]], api_key: str):
 		if arg[1][0] != "-":
 			print("Invalid argument.")
 		else:
-			if arg[1][1:].strip() == "n":
-				print(p.name)
-			elif arg[1][1:].strip() == "wl":
+			formatted_arg = arg[1][1:].strip()
+			if formatted_arg == "n":
+				print("Player Name: %s" % p.name)
+			elif formatted_arg == "wl":
 				print(p.get_win_ratio())
-
+			elif formatted_arg == "lvl":
+				print("Level: %d" % p.level)
+			elif formatted_arg == "d":
+				print("\n")
+				for card, att in p.current_deck.items():
+					print("Card: %s Level: %d Count: %s" % (card, att[0], att[1]))
+				print("\n")
+			elif formatted_arg == "clan":
+				print("Clan: %s" % p.clan[0])
+			elif formatted_arg == "b":
+				print("Total number of battles: %s" % p.total_battles)
+			elif formatted_arg == "c":
+				print("\n")
+				p.print_upcoming_chests()
+				print("\n")
+			elif formatted_arg == "t":
+				print("Trophy Count: %s" % p.current_trophies)
+			elif formatted_arg == "l":
+				if formatted_arg[1] == "s":
+					print("single case")
+				else:
+					print("doubles case")
+				# TODO: case for numbers
+				print("working")
 
 
 
@@ -99,7 +127,7 @@ def parse(full_cmd: List[str], api_key:str):
 	# need a way to distinguish between clan and player
 
 	elif cmd == "h" or cmd == "help":
-		print_help(arg)
+		print_help(arg[0])
 	elif cmd == "q" or cmd == "quit" or cmd == "exit":
 		return False
 	else:
