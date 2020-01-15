@@ -42,7 +42,7 @@ def print_clan_help():
 	print("\t\t-l\t\tReturn the leader.")
 	print("\n\tALIAS:\n\t\tclan\n\n\tARGUMENT:\n\t\tclan tag\t\tfound under the clan profile.\n")
 
-def print_help(arg):
+def print_help(arg: Optional[List[str]]):
 	if arg:
 		if arg == "p" or arg == "player":
 			print_player_help()
