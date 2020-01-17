@@ -45,6 +45,9 @@ class Player:
 				print("\t%s %s on round %d." % (adj, chest, num))
 
 
+class Clan:
+	def __init__(self, clan_tag, file):
+		info = clash.get_clan_info(clan_tag, file)
 
 
 
