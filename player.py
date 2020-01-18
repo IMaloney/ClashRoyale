@@ -48,9 +48,29 @@ class Player:
 class Clan:
 	def __init__(self, clan_tag, file):
 		info = clash.get_clan_info(clan_tag, file)
+		self.name = info["name"]
+		self.trophies = info["clanWarTrophies"]
+		self.donations_per_week = info["donationsPerWeek"]
+		self.players_list = list()
+		self.players_dict = dict()
+		self.update_player_dict()
+
+	def update_player_dict(self, info):
+		for member in info["memberList"]:
+			# currently stored by name (may switch to tag name)
+			self.players_list.append(member["name"])
+			self.players_dict["name"] = dict()
+			self.players_dict["name"]["tag"] = member["name"]["tag"]
+			self.players_dict["name"]["role"] = member["name"]["role"]
+			self.
 
 
 
-player = Player("Y0VGUUPLP", "./api_key.txt")
+
+# clash.get_clan_info("G29Y22", "./brown_key.txt")
+# player = Player("Y0VGUUPLP", "./brown_key.txt")
+# print(player.name)
+clan = Clan("9LUP8QRR", "./cit_key.txt")
+print(clan.info)
 # player.get_curr_deck()
 # print(player.upcoming_chests)

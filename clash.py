@@ -17,22 +17,22 @@ def make_request(endpoint, file):
 	return requests.get(base_url + endpoint, headers=header)
 
 def get_clan_info(clan_tag, file):
-	endpoint = "/clan/%23" + clan_tag
+	endpoint = "/clans/%23" + clan_tag
 	info = json.loads(make_request(endpoint, file).text)
 	return info
 
 def get_clan_members(clan_tag, file):
-	endpoint = "/clan/%23" + clan_tag + "/members"
+	endpoint = "/clans/%23" + clan_tag + "/members"
 	info = json.loads(make_request(endpoint, file).text)
 	return info
 
 def get_clan_warlog(clan_tag, file):
-	endpoint = "/clan/%23" + clan_tag + "/warlog"
+	endpoint = "/clans/%23" + clan_tag + "/warlog"
 	info = json.loads(make_request(endpoint, file).text)
 	return info
 
 def get_clan_currentwar(clan_tag, file):
-	endpoint = "/clan/%23" + clan_tag + "/currentwar"
+	endpoint = "/clans/%23" + clan_tag + "/currentwar"
 	info = json.loads(make_request(endpoint, file).text)
 	return info
 
