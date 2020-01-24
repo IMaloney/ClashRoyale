@@ -3,17 +3,6 @@ import clash
 from player import Player
 
 def print_player_help():
-	# TODO: need to add -w and -l 
-	# print("\nHelp: p [player tag] [options...]\n\tPrints information about the player." +
-	#  "The player tag is the set of characters\n\tfound the username in the player profile portal.\n\n" + 
-	#  "\tOPTIONS:\n\t\t-l[s/d][number of matches]\t\treturn the number of battles\n\t\t\t\t\t\t\tincluding" + 
-	#  " details.\n\t\t-c\t\tReturn the type of chest indexed at when the player will\n\t\t\t\trecieve the" + 
-	#  "chest.\n\t\t-n\t\tReturn the name of the player.\n\t\t-lvl\t\treturn the level of the player.\n" + 
-	#  "\t\t-t\t\tReturn the current trophy count of the player.\n\t\t-wl\t\tReturn the singles win loss" + 
-	#  " ratio of the player.\n\t\t-d\t\tReturn the current deck of the player.\n\t\t-clan\t\tReturn the" + 
-	#  " current clan of the player.\n\t\t-b\t\tReturn the total number of battles (including doubles).\n" + 
-	#  "\n\t\tALIAS:\n\tplayer\n\n\tARGUMENT:\n\t\tplayer tag\t\tfound in player profile portal under the" + 
-	#  "\n\t\t\t\t\tusername.\n")
 	print("\nHelp: p [player tag] [options...]")
 	print("\tPrints information about the player. The player tag is the set of characters\n\tfound the username in the player profile portal.\n")
 	print("\tOPTIONS:")
@@ -32,7 +21,6 @@ def print_player_help():
 	print("\n\tARGUMENT:\n\t\tplayer tag\t\tfound in player profile portal under the\n\t\t\t\t\tusername.\n")
 
 def print_clan_help():
-	# TODO: consolidate to one function
 	print("\nHelp: c [clan tag] [options...]\n\tPrints information about the clan. The clan tag is found under the clan profile.\n")
 	print("\tOPTIONS:")
 	print("\t\t-s\t\tReturn the clan score.")

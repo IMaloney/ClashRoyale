@@ -47,6 +47,7 @@ class Player:
 
 class Clan:
 	def __init__(self, clan_tag, file):
+		self.file = file
 		info = clash.get_clan_info(clan_tag, file)
 		self.name = info["name"]
 		self.trophies = info["clanWarTrophies"]
@@ -58,11 +59,14 @@ class Clan:
 	def update_player_dict(self, info):
 		for member in info["memberList"]:
 			# currently stored by name (may switch to tag name)
-			self.players_list.append(member["name"])
-			self.players_dict["name"] = dict()
-			self.players_dict["name"]["tag"] = member["name"]["tag"]
-			self.players_dict["name"]["role"] = member["name"]["role"]
-			self.
+			# adding both tag and name to list
+			self.players_list.append((member["name"], member["tag"]))
+			# keep a tuple of the player role and the player class
+			self.players_dict["name"] = (member["name"]["role"], Player(member["tag"], self.file))
+			# self.players_dict["name"] = dict()
+			# self.players_dict["name"]["tag"] = member["name"]["tag"]
+			# self.players_dict["name"]["role"] = member["name"]["role"]
+			# self.players_dict[]
 
 
 
