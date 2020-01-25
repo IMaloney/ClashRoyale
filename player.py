@@ -13,6 +13,8 @@ def format_chests(chests):
 class Player:
 	def __init__(self, player_tag, file):
 		info = clash.get_player_info(player_tag, file)
+		# some names may not be in ascii (i.e. chinese characters)
+		# self.name = unicode(info["name"], "utf-8")
 		self.name = info["name"]
 		self.level = info["expLevel"]
 		self.current_trophies = info["trophies"]
@@ -48,10 +50,12 @@ class Player:
 class Clan:
 	def __init__(self, clan_tag, file):
 		self.file = file
-		info = clash.get_clan_info(clan_tag, file)
-		self.name = info["name"]
-		self.trophies = info["clanWarTrophies"]
-		self.donations_per_week = info["donationsPerWeek"]
+		self.info = clash.get_clan_info(clan_tag, file)
+		# still doesnt work for chinese characters
+		self.name = self.info["name"]
+		self.trophies = self.info["clanWarTrophies"]
+		self.donations_per_week = self.info["donationsPerWeek"]
+		self.clan_score = self.info["clanScore"]
 		self.players_list = list()
 		self.players_dict = dict()
 		self.update_player_dict()
@@ -72,9 +76,10 @@ class Clan:
 
 
 # clash.get_clan_info("G29Y22", "./brown_key.txt")
-# player = Player("Y0VGUUPLP", "./brown_key.txt")
+player = Player("8U0QGQGQ", "./brown_key.txt")
+print(player.name)
 # print(player.name)
-clan = Clan("9LUP8QRR", "./cit_key.txt")
-print(clan.info)
+# clan = Clan("9LUP8QRR", "./cit_key.txt")
+# print(clan.info)
 # player.get_curr_deck()
 # print(player.upcoming_chests)

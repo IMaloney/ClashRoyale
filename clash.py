@@ -1,7 +1,10 @@
 import requests
 import json
+from errors import *
 
 # Y0VGUUPLP --> my player id
+# TODO: figure out if what's below is possible
+# what if the repl connected to a server so you would never need an api key
 
 def get_key(file):
 	return open(file).read().strip('\n')
@@ -43,6 +46,7 @@ def get_player_info(player_tag, file):
 	endpoint = "/players/%23" + player_tag
 	# may do a little more with info
 	info = json.loads(make_request(endpoint, file).text)
+	print(info)
 	return info
 
 def get_player_upcomingchests(player_tag, file):
