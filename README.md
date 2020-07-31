@@ -1,16 +1,16 @@
-#Clash Royale CLI
+#Clash Royale CLI#
 
-##Description:
+##Description:##
 A Command Line information to pull information on clans and players, allowing you to compare data. There is a website (not made by me), but I use this tool when I'm in school and can't access that site. You can keep up with your clan to see who is donating.
 
-##Installation:
+##Installation:##
 You should probably setup a virtual environment for this so the modules don't conflict with anything you already have setup. If you really don't care, then you can skip that step and just install the dependencies. To do so, type:
 
 `pip install -r requirements.txt`
 
 in the directory containing the project. This will install everything you need to run.
 
-##Usage:
+##Usage:##
 There are a couple of ways to use this. You can use your own api key (which is generated on the developers page) or you can connect to the server setup. To do so, when starting up the cli,  instead of supplying the location to the api key file, just type:
 
 `s`
@@ -19,12 +19,12 @@ or
 
 `server`
 
-##Commands:
+##Commands:##
 
-##Help
+##Help##
 `h [options]`
 
-###Options:
+###Options:###
 	-c prints the clan command help
 	-p prints the player command help
 	--cmp prints the compare player command help
@@ -33,11 +33,11 @@ or
 **All commands from this point on require the tag of a player or clan (located under object's profile in game)**
 ---
 
-## Player
+## Player##
 `p [player tag] [options...]`
 Prints information about the player
 
-###Options:
+###Options:###
 	-a      prints player's current arena
 	-c      prints player's upcoming chests by amount of matches 
 	--lvl   prints player's level
@@ -50,10 +50,10 @@ Prints information about the player
 	-b      prints player's total number of battles
 	-r      prints player's clan role
 
-##Clan
+##Clan##
 `c [clan tag] [options...]`
 
-###Options:
+###Options:###
 	-s      prints clan's score
 	-t      prints clan's current war trophies
 	-a      prints list of members with ranks and levels
@@ -65,10 +65,10 @@ Prints information about the player
 	-e      prints the elders
 	-m      prints the members
 
-##Compare player
+##Compare player##
 `cp [player tag] [player tag]... [options]`
 
-###Options:
+###Options:###
 	-a      prints the players' arenas
 	--lvl   prints the players' levels
 	-t      prints the players' trophy counts
@@ -78,6 +78,6 @@ Prints information about the player
 	-w      prints the players' war day wins
 	-b      prints the players' total battle count
 
-###TODO:
+###TODO:###
 - add clan comparison 
 - set up server
