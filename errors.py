@@ -8,8 +8,7 @@ class IncorrectParamtersError(Error):
 
 class AccessDeniedError(Error):
 	def __init__(self):
-		self.message = "Access denied, either because of missing/incorrect credentials" \ 
-		"or used API token does not grant access to the requested resource."
+		self.message = "Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource."
 
 class ResourceError(Error):
 	def __init__(self):
@@ -23,10 +22,6 @@ class ServiceError(Error):
 	def __init__():
 		self.message = "Service temporarily unavailable due to maintanence."
 
-
-
-
-def raise_error(info):
-	if "reason" in info.keys():
-		if infor["reason"] == :
-			raise 
+class ServerError(Error):
+	def __init__():
+		self.message = "Could not connect to server."
