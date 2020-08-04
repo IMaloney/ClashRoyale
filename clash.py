@@ -13,8 +13,14 @@ def handle_error(error: str) -> None:
 def get_key(file: str) -> str:
 	return open(file).read().strip('\n')
 
+def make_request_server(ep: str):
+	data  = {"endpoint": ep} 
+	info = requests.post("http://clash-env.eba-3wy7k7uc.us-east-2.elasticbeanstalk.com/", data=data)
+	print(info.text)
+	return None
+
 # still need to handle bad requests
-def make_request(endpoint, file):
+def make_request(endpoint: str, file: str):
 	if not file:
 		file = "./keys/home_key.txt"
 	key = get_key(file)
@@ -22,7 +28,7 @@ def make_request(endpoint, file):
 	base_url = "https://api.clashroyale.com/v1"
 	return requests.get(base_url + endpoint, headers=header)
 
-def get_clan_info(clan_tag, file):
+def get_clan_info(clan_tag: str, file: str, server: bool):
 	endpoint = "/clans/%23" + clan_tag
 	info = json.loads(make_request(endpoint, file).text)
 	if "reason" in info:
@@ -58,14 +64,19 @@ def get_player_info(player_tag: str, file: str, server: bool):
 		info = json.loads(make_request(endpoint, file).text)
 	else:
 		# make request to our server
-		pass
+		info = make_request_server(endpoint)
+		return None
 	if "reason" in info:
 		handle_error(info['reason'])
 	return info
 
-def get_player_upcomingchests(player_tag, file):
+def get_player_upcomingchests(player_tag: str, file: str, server: bool):
 	endpoint = "/players/%23" + player_tag + "/upcomingchests"
-	info = json.loads(make_request(endpoint, file).text)
+	if not server:
+		info = json.loads(make_request(endpoint, file).text)
+	else:
+		info = make_request_server(endpoint)
+		return None
 	if "reason" in info:
 		handle_error(info['reason'])
 	return info

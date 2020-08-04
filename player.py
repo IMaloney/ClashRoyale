@@ -14,6 +14,8 @@ def format_chests(chests):
 class Player:
 	def __init__(self, player_tag: str, file: str = None, server: bool  = False):
 		info = clash.get_player_info(player_tag, file, server)
+		if not info:
+			return
 		# some names may not be in ascii (i.e. chinese characters)
 		# self.name = unicode(info["name"], "utf-8")
 		self.name = info["name"]
@@ -22,7 +24,7 @@ class Player:
 		self.wins = info["wins"]
 		self.losses = info["losses"]
 		self.three_crowns = info["threeCrownWins"]
-		self.upcoming_chests = format_chests(clash.get_player_upcomingchests(player_tag, file))
+		self.upcoming_chests = format_chests(clash.get_player_upcomingchests(player_tag, file, server))
 		# includes 2v2 battles
 		self.total_battles = info["battleCount"]
 		self.current_deck = clash.format_cards(info["currentDeck"])
@@ -69,7 +71,9 @@ leadership = {"leader": 3, "coleader": 2, "elder": 1, "member": 0}
 class Clan:
 	def __init__(self, clan_tag:str, file:str = None, server: bool = False):
 		self.file = file
-		self.info = clash.get_clan_info(clan_tag, file)
+		self.info = clash.get_clan_info(clan_tag, file, server)
+		if not self.info:
+			return
 		# still doesnt work for chinese characters
 		self.name = self.info["name"]
 		self.trophies = self.info["clanWarTrophies"]
