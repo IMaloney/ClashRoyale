@@ -80,4 +80,5 @@ Prints information about the player
 
 ### TODO:
 - add clan comparison 
-- set up server
+- add in-memory database to speed up requests
+- fix server

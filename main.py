@@ -53,7 +53,7 @@ def print_compare_player_help() -> None:
 	print("\n\tALIAS:\n\t\tcompare\n\n\tARGUMENT:\n\t\tplayer tags\t\tfound under the player profile.\n")
 
 # api_key unnecessary, just use it to work with the switch statement
-def print_help(args: List[str], api_key: str = None) -> None:
+def print_help(args: List[str], api_key: str) -> None:
 	opts, args = getopt.gnu_getopt(args, 'cp', ["cmp"])
 	print(opts)
 	flag = True
@@ -75,7 +75,7 @@ def print_help(args: List[str], api_key: str = None) -> None:
 		print('\t-c\tprints clan specific information. Enter "h -c" for more information on the c command.')
 		print('\t--cmp\tprints compare specific information. Enter "h --cmp" for more information on the cmp command.')
 
-def compare_player_cmd(args: Optional[List[str]], api_key: str = None) -> None:
+def compare_player_cmd(args: Optional[List[str]], api_key: str) -> None:
 	opts, args = getopt.gnu_getopt(args, 'atwb', ["lvl", "wl", "clan", "don"])
 	for o, a in opts:
 		o = o.replace('-', '')
@@ -95,14 +95,14 @@ def compare_player_cmd(args: Optional[List[str]], api_key: str = None) -> None:
 			pass
 		if o == "don":
 			pass
-def clan_cmd(args: Optional[List[str]], api_key: str = None) -> None:
+def clan_cmd(args: Optional[List[str]], api_key: str) -> None:
 	opts, args = getopt.gnu_getopt(args, 'stmd::h::w::leca::')
 	if len(args) < 2:
 		print('Missing arguments. Enter "h -c" for more information on the clan command')
 		return
 	tag = args[1].upper()
 	try:
-		c = Clan(tag, api_key) if api_key else Clan(tag, server=True)
+		c = Clan(tag, api_key)
 	except ResourceError:
 		print("Clan tag did not match any known clan tags")
 		return
@@ -138,7 +138,7 @@ def clan_cmd(args: Optional[List[str]], api_key: str = None) -> None:
 
 
 
-def player_cmd(args: Optional[List[str]], api_key: str = None) -> None:
+def player_cmd(args: Optional[List[str]], api_key: str) -> None:
 	opts, args = getopt.gnu_getopt(args, 'ndbctawr', ["don", "lvl", "wl", "clan"])
 	if len(args) < 2:
 		print('Missing arguments. Enter "h -p" for more information on the player command')
@@ -147,7 +147,7 @@ def player_cmd(args: Optional[List[str]], api_key: str = None) -> None:
 	# pull info from server
 	try: 
 		# send request to server, wait for response (sending just the tag)
-		p = Player(tag, api_key) if api_key else Player(tag, server=True)
+		p = Player(tag, api_key)
 		print(f"Player {p.name}:")
 		for o, a in opts:
 			o = o.replace('-', '')
@@ -200,21 +200,18 @@ commands = {
 		"compare": compare_player_cmd
 	}
 
-def parse(full_cmd: List[str], api_key:str, server: bool) -> bool:
+def parse(full_cmd: List[str], api_key:str) -> bool:
 	arg = full_cmd[0]
 	if arg == 'q' or arg == "quit" or arg == "exit":
 		return False
 	if arg not in commands:
 		print('Command not recognized. Enter "h" or "help" for a list of commands.')
 	else:
-		if server:
-			commands[arg](full_cmd)
-		else:
-			commands[arg](full_cmd, api_key)
+		commands[arg](full_cmd, api_key)
 	return True
 
 
-def repl(api_key: str, server: bool) -> None:
+def repl(api_key: str) -> None:
 	exit = True
 	while exit:
 		cmd = input("Clash Royale>> ")
@@ -224,28 +221,25 @@ def repl(api_key: str, server: bool) -> None:
 		if cmd is None or not len(cmd):
 			print('No command entered. Enter "h" or "help" for list of commands.')
 		else:
-			exit = parse(cmd_list, api_key, server)
+			exit = parse(cmd_list, api_key)
 
 def main() -> None:
 	print("\nEnter the file for your API Key.")
 	print('If you are using a pre-added key, type "default" or "d"')
 	print('If you are connecting to the server, type "server" or "s"')
 	print('Type "quit" or "q" to exit')
-	server = False
 	exit = True
 	while exit:
 		api_key = input("API file>> ")
 		api_key.lower().strip()
 		if api_key == 'd' or api_key == 'default':
-			api_key = None
+			api_key = "./keys/home_key.txt"
 			exit = False
 		elif api_key == 'q' or api_key == 'quit':
 			print('quit')
 			sys.exit(0)
 		elif api_key == 's' or api_key == 'server':
-			print('server')
 			api_key = None
-			server = True
 			exit = False
 		else:
 			try:
@@ -258,7 +252,7 @@ def main() -> None:
 				print("The key you entered was not a valid key.")
 				print("Try again with a new key or connect to the server.")
 
-	repl(api_key, server)
+	repl(api_key)
 
 
 if __name__ == "__main__":

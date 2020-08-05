@@ -12,9 +12,10 @@ app.post('/', async (req, res)=> {
 	console.log(req.body);
 	try {
 		const response = await supercell.get(req.body.endpoint);
-		console.log(response);
-		res.send({response});
+		const data = response.data;
+		res.send(data);
 	} catch(err) {
+		console.log(err);
 		res.send({err});
 	}
 });
@@ -23,7 +24,7 @@ app.get('/', (req, res) => {
 	res.send("<h1>Test</h1>");
 });
 
-app.listen(3000, () => {
-	console.log("listening on port 3000");
+app.listen(process.env.PORT, () => {
+	console.log("listening on port ", process.env.PORT);
 });
 

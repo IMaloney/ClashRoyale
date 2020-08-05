@@ -25,3 +25,10 @@ class ServiceError(Error):
 class ServerError(Error):
 	def __init__():
 		self.message = "Could not connect to server."
+
+
+def handle_error(error: str) -> None:
+	if error == "accessDenied":
+		raise AccessDeniedError()
+	if error == "notFound":
+		raise ResourceError()

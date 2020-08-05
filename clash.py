@@ -1,109 +1,93 @@
 import requests
 import json
-from errors import *
+from errors import handle_error
 
 # Y0VGUUPLP --> my player id
 
-def handle_error(error: str) -> None:
-	if error == "accessDenied":
-		raise AccessDeniedError()
-	if error == "notFound":
-		raise ResourceError()
+def get_key(api_key: str) -> str:
+	return open(api_key).read().strip('\n')
 
-def get_key(file: str) -> str:
-	return open(file).read().strip('\n')
+def make_request(endpoint: str, api_key: str):
+	if api_key:
+		key = get_key(api_key)
+		header = {"Authorization": "Bearer %s" % key}
+		base_url = "https://api.clashroyale.com/v1"
+		info = requests.get(base_url + endpoint, headers=header)
+	else:
+		#  http://localhost:3000/ http://clash-env.eba-3wy7k7uc.us-east-2.elasticbeanstalk.com/
+		info = requests.post("http://localhost:3000/", data={"endpoint": endpoint})
+	j = json.loads(info.text)
+	return j
 
-def make_request_server(ep: str):
-	data  = {"endpoint": ep} 
-	info = requests.post("http://clash-env.eba-3wy7k7uc.us-east-2.elasticbeanstalk.com/", data=data)
-	print(info.text)
-	return None
-
-# still need to handle bad requests
-def make_request(endpoint: str, file: str):
-	if not file:
-		file = "./keys/home_key.txt"
-	key = get_key(file)
-	header = {"Authorization": "Bearer %s" % key}
-	base_url = "https://api.clashroyale.com/v1"
-	return requests.get(base_url + endpoint, headers=header)
-
-def get_clan_info(clan_tag: str, file: str, server: bool):
+def get_clan_info(clan_tag: str, api_key: str):
 	endpoint = "/clans/%23" + clan_tag
-	info = json.loads(make_request(endpoint, file).text)
+	info = make_request(endpoint, api_key)
 	if "reason" in info:
 		handle_error(info['reason'])
 		print(info['reason'])
 	return info
 
-def get_clan_members(clan_tag, file):
+def get_clan_members(clan_tag, api_key):
 	endpoint = "/clans/%23" + clan_tag + "/members"
-	info = json.loads(make_request(endpoint, file).text)
+	info = make_request(endpoint, api_key)
 	if "reason" in info:
 		handle_error(info['reason'])
 	return info
 
-def get_clan_warlog(clan_tag, file):
+def get_clan_warlog(clan_tag, api_key):
 	endpoint = "/clans/%23" + clan_tag + "/warlog"
-	info = json.loads(make_request(endpoint, file).text)
+	info = make_request(endpoint, api_key)
 	if "reason" in info:
 		handle_error(info['reason'])
 	return info
 
-def get_clan_currentwar(clan_tag: str, file: str):
+def get_clan_currentwar(clan_tag: str, api_key: str):
 	endpoint = "/clans/%23" + clan_tag + "/currentwar"
-	info = json.loads(make_request(endpoint, file).text)
+	info = make_request(endpoint, api_key)
 	if "reason" in info:
 		handle_error(info['reason'])
+	if "err" in info:
+		pass
 	return info
 
-def get_player_info(player_tag: str, file: str, server: bool):
+def get_player_info(player_tag: str, api_key: str):
 	endpoint = "/players/%23" + player_tag
 	# may do a little more with info
-	if not server:
-		info = json.loads(make_request(endpoint, file).text)
-	else:
-		# make request to our server
-		info = make_request_server(endpoint)
-		return None
+	info = make_request(endpoint, api_key)
 	if "reason" in info:
 		handle_error(info['reason'])
 	return info
 
-def get_player_upcomingchests(player_tag: str, file: str, server: bool):
+def get_player_upcomingchests(player_tag: str, api_key: str):
 	endpoint = "/players/%23" + player_tag + "/upcomingchests"
-	if not server:
-		info = json.loads(make_request(endpoint, file).text)
-	else:
-		info = make_request_server(endpoint)
-		return None
+	info = make_request(endpoint, api_key)
 	if "reason" in info:
 		handle_error(info['reason'])
 	return info
 
-def get_player_battlelog(player_tag, file):
+def get_player_battlelog(player_tag, api_key):
 	endpoint = "/players/%23" + player_tag + "/battlelog"
-	info = json.loads(make_request(endpoint, file).text)
+	info = make_request(endpoint, api_key)
 	if "reason" in info:
 		handle_error(info['reason'])
 	return info
 
-def get_tournament_info(tournament_tag, file):
+def get_tournament_info(tournament_tag, api_key):
 	endpoint = "/tournaments/%23" + tournament_tag
-	info = json.loads(make_request(endpoint, file).text)
+	info = make_request(endpoint, api_key)
 	if "reason" in info:
 		handle_error(info['reason'])
 	return info
 
-def get_locations(file):
+def get_locations(api_key):
 	endpoint = "/locations"
-	info = json.loads(make_request(endpoint, file).text)
+	info = make_request(endpoint, api_key)
 	if "reason" in info:
 		handle_error(info['reason'])
 	return info
 
-def get_cards(file):
-	info = json.loads(make_request("/cards", file).text)
+def get_cards(api_key):
+	info = make_request("/cards", api_key)
 	if "reason" in info:
 		handle_error(info['reason'])
 	return info
