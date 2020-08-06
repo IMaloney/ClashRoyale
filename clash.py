@@ -14,8 +14,7 @@ def make_request(endpoint: str, api_key: str):
 		base_url = "https://api.clashroyale.com/v1"
 		info = requests.get(base_url + endpoint, headers=header)
 	else:
-		#  http://localhost:3000/ http://clash-env.eba-3wy7k7uc.us-east-2.elasticbeanstalk.com/
-		info = requests.post("http://localhost:3000/", data={"endpoint": endpoint})
+		info = requests.post("http://clash-env.eba-3wy7k7uc.us-east-2.elasticbeanstalk.com/", data={"endpoint": endpoint})
 	j = json.loads(info.text)
 	return j
 
