@@ -9,7 +9,7 @@ def print_player_help() -> None:
 	print("\nHelp: p [player tag] [options...]")
 	print("\tPrints information about the player. The player tag is the set of characters\n\tfound the username in the player profile portal.\n")
 	print("\tOPTIONS:")
-	# if no number given, prnts all of that type (type must be supplied)
+	# if no number given, prints all of that type (type must be supplied)
 	print("\t\t-a\t\tReturn current arena")
 	print("\t\t-c\t\tReturn the type of chest indexed at when the player will recieve the chest.")
 	print("\t\t--lvl\t\treturn the level of the player.") 
@@ -144,11 +144,13 @@ def player_cmd(args: Optional[List[str]], api_key: str) -> None:
 		print('Missing arguments. Enter "h -p" for more information on the player command')
 		return
 	tag = args[1].upper()
-	# pull info from server
+	semi = ':'
+	if not opts:
+		semi = ''
 	try: 
 		# send request to server, wait for response (sending just the tag)
 		p = Player(tag, api_key)
-		print(f"Player {p.name}:")
+		print(f"Player {p.name}{semi}")
 		for o, a in opts:
 			o = o.replace('-', '')
 			if o == 'c':
@@ -180,7 +182,6 @@ def player_cmd(args: Optional[List[str]], api_key: str) -> None:
 					print("Not in Clan")
 	except ResourceError:
 		print("Player tag did not match any known player tags")
-	# add some more excepts for different errors in errors class
 
 # def compare_players(args, stat):
 # 	pass
@@ -233,18 +234,29 @@ def main() -> None:
 		api_key = input("API file>> ")
 		api_key.lower().strip()
 		if api_key == 'd' or api_key == 'default':
-			api_key = "./keys/home_key.txt"
-			exit = False
+			try: 
+				api_key = "./keys/home_key.txt"
+				get_cards(api_key)
+				print("Connected with the default key.")
+				exit = False
+			except e:
+				print("Either the api  key you entered doesn't exist or its wrong.")
+				print("If you do not have one, connect to the server.")
 		elif api_key == 'q' or api_key == 'quit':
 			print('quit')
 			sys.exit(0)
 		elif api_key == 's' or api_key == 'server':
 			api_key = None
-			exit = False
+			try: 
+				get_cards(api_key)
+				exit = False
+				print("Connected to server.\n")
+			except e:
+				print("Could not connect to server.")
 		else:
 			try:
 				# just a quick test to see if you can access api
-				print(get_cards(api_key))
+				get_cards(api_key)
 			except FileNotFoundError:
 				print("Please enter a txt file containing the api key.")
 				print("If you do not have one, just connect to the server.")

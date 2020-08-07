@@ -164,13 +164,3 @@ class Clan:
 
 	def get_leader(self) -> str:
 		return self.leader
-
-
-# clash.get_clan_info("G29Y22", "./brown_key.txt")
-# player = Player("8U0QGQGQ", "./brown_key.txt")
-# print(player.name)
-# print(player.name)
-# clan = Clan("9LUP8QRR", "./cit_key.txt")
-# print(clan.info)
-# player.get_curr_deck()
-# print(player.upcoming_chests)
